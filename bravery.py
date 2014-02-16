@@ -317,7 +317,7 @@ while True:
           # If the exception is non-fatal, add it to the nextResponseQueue.
           strex = str(ex)
           if "Forbidden" not in strex:
-            nextResponseQueue.append(response)
+            nextResponseQueue.append(queueEntry)
     elif responseType == "Post": #If we're submitting a post:
       try:
         post = response.submit()
