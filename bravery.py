@@ -438,7 +438,7 @@ while True:
         result = ruleFunction(comment)
         if result:
           print "Hit!", ruleName
-          if type(result).__name__ == "str":
+          if type(result).__name__ in ["str", "unicode"]:
             result = (result, comment)
           responseQueue.append((result, ruleName))
 
