@@ -79,13 +79,21 @@ def rules(): # Define rules here.
   def bullshitCopypasta(comment):
     if "This is bullshit - you're oversimplifying a complex situation to the point of no longer adding anything to the discussion." in comment.body:
       return """I am aware this is "copypasta", but I'm going to explain why it isn't relevant in this case. You people seem to think "copypastas" are funny by definition if they're relevant, and you post them even if they're not, hoping others upvote them on sight.
+
 Let me tell you that's not how it works. For instance, the fact that you decided to use that copypasta in this situation indicates that you think:
+
 a) the situation was complex
+
 b) it has been oversimplified
+
 c) it adds nothing to the conversation.
+
 Well, you see, complexity is subjective, that's the nature of emergence. What's complex for a child like you is often trivial or routine for a scientist like me. Reddit's userbase is quite diverse, although there seems to be evidence of an over-representation of individuals exhibiting childish behaviors.
+
 Secondly, do you really think this situation has been has been oversimplified? It's through using "copypastas" and other hasty generalizations you try to cram each individual scenario with its particularities into a formulaic mold. I hypothesize you require this simplification because of the state of your mental faculties and reasoning skills.
+
 And lastly, most of the time your simplifications do not aid in understanding new facets of the subject matter. Characterizations that might not be 100% accurate can act as useful models for understanding overarching facets of complex inter-dependent systems, but your "copypastas" do not facilitate in that endeavor.
+
 If even one of these criticisms is valid, your point is moot as it depends unilaterally on all the three premises I've highlighted. The social commentary you wish "copypastas" to exhibit might seem sensible, maybe even profound to you, but they're just as bad, if not worse than the additions reactiongifs, pun chains or novelty accounts bring to the table. Please consider this seriously, and don't immediately fall back on your preconceived notions without reexamining their validity, at least in a cursory manner after I've presented you with this new evidence you really should take seriously."""
 
 
