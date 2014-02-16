@@ -97,6 +97,21 @@ And lastly, most of the time your simplifications do not aid in understanding ne
 If even one of these criticisms is valid, your point is moot as it depends unilaterally on all the three premises I've highlighted. The social commentary you wish "copypastas" to exhibit might seem sensible, maybe even profound to you, but they're just as bad, if not worse than the additions reactiongifs, pun chains or novelty accounts bring to the table. Please consider this seriously, and don't immediately fall back on your preconceived notions without reexamining their validity, at least in a cursory manner after I've presented you with this new evidence you really should take seriously."""
 
 
+  # /u/xvvhiteboy
+  def bitcoinMagic(comment):
+    if "bitcoin" in comment.body.lower():
+      return "I don't feel comfortable investing in a currency where the price drops when a Magic The Gathering website has technical issues"
+
+  # /u/xvvhiteboy
+  def ragingClue(comment):
+    if "raging clue" in comment.body.lower():
+      return "I'm about to spray clue glue everywhere, let's follow your clue."
+
+  # /u/xvvhiteboy
+  def shivakamini(comment):
+    if "shiva" in comment.body.lower():
+      return "SHIVAKAMINI SOMAKANDARKRAM!!!"
+
 
   # Return all the rules we've just defined
   return locals()
