@@ -28,7 +28,7 @@ def rules(): # Define rules here.
   # If someone makes a one-word reply saying "religion" to an askreddit post,
   # commend them for their bravery, or post it to /r/magicskyfairy.
   def religion(comment):
-    if comment.subreddit in ["AskReddit","test"] and "religion" in comment.body.lower() and len(comment.body) < 10 and comment.parent_id[:2]=="t3":
+    if str(comment.subreddit) in ["AskReddit","test"] and "religion" in comment.body.lower() and len(comment.body) < 10 and comment.parent_id[:2]=="t3":
       if True: # random.randint(0,1): #wait till the bot gets going before doing this
         return random.choice([
           "I tip my fedora to you, good sir",
@@ -59,7 +59,7 @@ def rules(): # Define rules here.
 
   # /u/wsgy111
   def circumcision(comment):
-    if "circumcis" in comment.body.lower():
+    if random.randint(0,1) and "circumcis" in comment.body.lower():
       return "Circumcision is genital mutilation, pure and simple. My penis was mangled when I was young because of some stupid fucking religious custom, and the entire practice should be outlawed."
   
 
@@ -99,7 +99,7 @@ If even one of these criticisms is valid, your point is moot as it depends unila
 
   # /u/xvvhiteboy
   def bitcoinMagic(comment):
-    if "bitcoin" in comment.body.lower():
+    if not random.randint(0,3) and "bitcoin" in comment.body.lower():
       return "I don't feel comfortable investing in a currency where the price drops when a Magic The Gathering website has technical issues"
 
   # /u/xvvhiteboy
@@ -354,7 +354,7 @@ while True:
           print "Exception in replying:", ex
           # If the exception is non-fatal, add it to the nextResponseQueue.
           strex = str(ex)
-          if "Forbidden" not in strex:
+          if "you are doing that too much" in strex:
             nextResponseQueue.append(queueEntry)
     elif responseType == "Post": #If we're submitting a post:
       try:
@@ -364,7 +364,7 @@ while True:
         #TODO: refactor to avoid repetition
         # If the exception is non-fatal, add it to the nextResponseQueue.
         strex = str(ex)
-        if "Forbidden" not in strex:
+        if "you are doing that too much" in strex:
           nextResponseQueue.append(queueEntry)
     else:
       print "Unknown response type:", responseType
