@@ -114,7 +114,7 @@ def rules(): # Define rules here.
       if random.randint(0,5)==1:
         if bjClipboard == "":
           #Get a new copypaste.
-          bjClipboard = body
+          bjClipboard = comment.body
           print "Copied Braveryjerk comment for later use"
           return
         else:
@@ -212,7 +212,10 @@ If even one of these criticisms is valid, your point is moot as it depends unila
   # /u/xvvhiteboy
   def bitcoinMagic(comment):
     if not random.randint(0,3) and "bitcoin" in comment.body.lower():
-      return "I don't feel comfortable investing in a currency where the price drops when a Magic The Gathering website has technical issues"
+      return random.choice([
+        "I don't feel comfortable investing in a currency where the price drops when a Magic The Gathering website has technical issues",
+        "Anything that has dropped 650 dollars in 1 second is not an investment I am willing to risk making."
+      ])
 
   # /u/xvvhiteboy
   def ragingClue(comment):
