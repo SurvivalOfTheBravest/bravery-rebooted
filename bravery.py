@@ -148,8 +148,8 @@ class Post:
 rulesList = rules()
 
 # Set up database
-from pysqlite2 import dbapi2 as sqlite
-dbConnection = sqlite.connect("database.db")
+import sqlite3
+dbConnection = sqlite3.connect("database.db")
 dbCursor = dbConnection.cursor()
 dbCursor.execute("""CREATE TABLE IF NOT EXISTS history (
   id INTEGER PRIMARY KEY,
