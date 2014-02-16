@@ -57,6 +57,118 @@ def rules(): # Define rules here.
           subreddit = "magicskyfairy"
         )
 
+
+  def instructionsUnclear(comment):
+    lc = comment.body.lower()
+    if "step 1" in lc and "step 2" in lc:
+      longestWord = max(re.findall(r"[\w']+|[.,!?;]", comment.body),key=len)
+      return "Instructions unclear, dick stuck in "+longestWord
+
+
+  def alot(comment):
+    #Posts an alot if someone misuses "a lot"
+    lowercaseComment = comment.body.lower()
+    if " alot " in lowercaseComment:
+      alot_List = [
+        "http://4.bp.blogspot.com/_D_Z-D2tzi14/S8TRIo4br3I/AAAAAAAACv4/Zh7_GcMlRKo/s400/ALOT.png" ,
+        "http://4.bp.blogspot.com/_D_Z-D2tzi14/S8TfVzrqKDI/AAAAAAAACw4/AaBFBmKK3SA/s320/ALOT5.png" ,
+        "http://www.mentalfloss.com/sites/default/legacy/blogs/wp-content/uploads/2011/02/550_alotAlix.jpg" ,
+        "http://cdn0.dailydot.com/cache/51/95/51950010b596348543008ad9019a2ae6.jpg",
+        "http://i.imgur.com/azxmg.png",
+        "http://i.imgur.com/3uwHa.jpg"
+      ]
+      return "[alot](" + random.choice(alot_List) + ")"
+
+
+  def hodor(comment):
+    #if str(comment.subreddit) == "books": return None
+    lc = comment.body.lower()
+    #We don't need this, because we don't track those subreddits.
+    #subreddit = str(comment.subreddit)
+    #if subreddit == "gameofthrones" or subreddit == "asoiaf": return None
+    triggerList = ["joffrey","lannister","game of thrones","a song of ice and fire","jon snow" ]
+    hodorList = ["Hodor?", "hodor.", "HODOR!!!" ,"hodor?!"]
+    for trigger in triggerList:
+      if trigger in lc:
+        return(random.choice(hodorList),comment)
+
+
+  def riskyClickVideo(comment):
+    if "://www.liveleak.com/" in comment.body:
+      responses = [
+        "risky click of the day",
+        "Risky click.",
+        "That link's staying blue, mate."
+      ]
+      return random.choice(responses)
+
+  def trollhunter(comment):
+    lc = comment.body.lower()
+    if random.randint(0,4) == 1 and " troll " in lc:
+      return "[i was only pretending](http://i.imgur.com/aaODnol.jpg)"
+
+
+  def bjCopyPaste(comment):
+    if str(comment.subreddit) == "Braveryjerk":
+      global bjClipboard
+      if random.randint(0,5)==1:
+        if bjClipboard == "":
+          #Get a new copypaste.
+          bjClipboard = body
+          print "Copied Braveryjerk comment for later use"
+          return
+        else:
+          #Release the copypaste.
+          response = bjClipboard
+          bjClipboard = ""
+          return response
+
+  # Detect if someone appears to be losing an argument,
+  # and get ourselves on the winning side.
+  def winningArgument(comment):
+    lc = comment.body.lower()
+    if len(lc)>50 and ("ad hominem" in lc or "i never said" in lc or "what makes you think" in lc or "personal attack" in lc):
+      try: #Get the parent comment.
+        threadID = comment.submission.id
+        parent = r.get_submission("http://www.reddit.com/r/all/comments/"+threadID+"/_/"+comment.parent_id[3:]).comments[0]
+      except Exception, ex:
+        print "winningArgument could not get parent:", ex
+        return
+      if parent.score > 2: #If the parent is upvoted,
+        try: #Get the grandparent comment.
+          grandparent = r.get_submission("http://www.reddit.com/r/all/comments/"+threadID+"/_/"+parent.parent_id[3:]).comments[0]
+        except Exception, ex:
+          print "winningArgument could not get grandparent:", ex
+          return
+        #If the grandparent has been downvoted and is by the same person,
+        if grandparent.score < 0 and comment.author == grandparent.author:
+          if random.randint(0,2) == 0: #Reply to the comment with disagreement
+            if "ad hominem" in lc:
+              responses = [
+                ">ad hominem\n\nI don't think that means what you think it means.",
+                "A simple expression of disagreement doesn't count as *ad hominem*.",
+                "I think that /u/"+str(parent.author)+" makes a valid point. Why do you think it's an *ad hominem*?",
+              ]
+            else:
+              responses = [
+                "someone sounds butthurt",
+                "the butthurt store called, they're running out of /u/"+str(comment.author),
+                "Why are you even arguing about this?",
+                "http://xkcd.com/386/",
+                "The fact that people still think like this makes me sad.",
+                "Dude, seriously. Give it a rest."
+              ]
+            return random.choice(responses)
+          else: #Or, reply to the parent with agreement.
+            responses = [
+              "I can't believe that anyone would be so naive as to disagree with this.",
+              "Haters gonna hate. Don't waste your time arguing with trolls.",
+              "Yours is a much needed voice of reason.",
+              "I wish more people were as reasonable as you.",
+              "Thank you for bringing some sanity to this discussion."
+            ]
+            return (random.choice(responses), parent)
+
   # /u/wsgy111
   def circumcision(comment):
     if random.randint(0,1) and "circumcis" in comment.body.lower():
@@ -112,6 +224,11 @@ If even one of these criticisms is valid, your point is moot as it depends unila
     if "shiva" in comment.body.lower():
       return "SHIVAKAMINI SOMAKANDARKRAM!!!"
 
+  # /u/xvvhiteboy
+  def maggianos(comment):
+    if "Maggiano's" in comment.body:
+      return "Recently I went on a date with my GF to Maggianos for lunch. We sat down and a couple minutes later a waiter noticed we hadnt had our drink orders taken. He alerted our waiter and our waiter gave him the table and he took our drink orders. The manager came over to us after we ordered drinks and apologized profusely. I explained we hadnt even noticed any wait and that there was no problem. We finished our meal and must have racked up a 40-60 bill and at the end the waiter said that our entire meal was on the house. Needless to say I didn't think that was necessary but they insisted. So I left all the money I had in my wallet as a tip which was around $25(I had planned to pay with a card) I honestly wish I could have tipped more and plan to go back and do so this week."
+
 
   # Return all the rules we've just defined
   return locals()
@@ -162,10 +279,16 @@ HARASSMENT_EXEMPTIONS = [
   "SOTB-human"
 ]
 
+# These rules are exempt from the no-harassment metarule.
+HARASSMENT_EXEMPT_RULES = [
+  "bjCopyPaste"
+]
 
 
-import time, random, string, praw
+
+import time, random, string, re, praw
 from collections import deque
+bjClipboard = ""
 
 # Set up reddit connection
 from secrets import USERNAME, PASSWORD
@@ -333,7 +456,7 @@ while True:
     responseType = type(response).__name__
     if responseType == "tuple": #If we're submitting a comment
       replyee = str(response[1].author)
-      if replyee == USERNAME or (replyee not in HARASSMENT_EXEMPTIONS and haveWeRepliedTo(replyee)):
+      if replyee == USERNAME or (replyee not in HARASSMENT_EXEMPTIONS and ruleName not in HARASSMENT_EXEMPT_RULES and haveWeRepliedTo(replyee)):
         print "not allowed to reply to", replyee
         continue
       elif ruleAlreadyInvokedInThread(ruleName, response[1].submission.id):
