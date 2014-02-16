@@ -56,7 +56,25 @@ def rules(): # Define rules here.
           content = msfUrl,
           subreddit = "magicskyfairy"
         )
+
+  # /u/wsgy111
+  def circumcision(comment):
+    if "circumcis" in comment.body.lower():
+      return "Circumcision is genital mutilation, pure and simple. My penis was mangled when I was young because of some stupid fucking religious custom, and the entire practice should be outlawed."
   
+
+  # /u/hansjens47
+  def edgy(comment):
+    if "2edgy4me" in comment.body.lower():
+      return "69edgy420me"
+
+
+  # /u/Coman_Dante
+  def braveryTrain(comment):
+    if "karma train" in comment.body.lower():
+      return "[Did somebody say karma train?](http://i.imgur.com/hlMv1.jpg)"
+
+
   # Return all the rules we've just defined
   return locals()
 
@@ -74,8 +92,16 @@ SUBREDDITS = [
   #"bjbs",
   "Braveryjerk",
   "circlejerk",
-  "AskReddit",
   "pics",
+  "funny",
+  "gaming",
+  "AskReddit",
+  "videos",
+  "IAmA",
+  "todayilearned",
+  "aww",
+  "AdviceAnimals",
+  "gifs",
   "wtf"
 ]
 
@@ -120,7 +146,6 @@ class Post:
 
 # "Compile" the rules
 rulesList = rules()
-print rulesList
 
 # Set up database
 from pysqlite2 import dbapi2 as sqlite
@@ -278,7 +303,13 @@ while True:
         continue
       else:
         try:
-          reply = response[1].reply(response[0])
+          tron = type(response[1]).__name__
+          if tron == "Comment":
+            reply = response[1].reply(response[0])
+          elif tron == "Submission":
+            reply = response[1].add_comment(response[0])
+          else:
+            raise ("Unknown responsee type:"+tron)
           print "Successfully commented!", reply.permalink
           writeToHistory(reply, ruleName, replyee)
         except Exception, ex:
