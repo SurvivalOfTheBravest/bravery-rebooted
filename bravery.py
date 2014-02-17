@@ -458,11 +458,17 @@ while True:
     ruleName = queueEntry[1]
     responseType = type(response).__name__
     if responseType == "tuple": #If we're submitting a comment
-      replyee = str(response[1].author)
+      try:
+        replyee = str(response[1].author)
+      	threadID = response[1].submission.id
+      except Exception, ex:
+      	print "Exception in getting context info:", ex
+      	nextResponseQueue.append(queueEntry)
+      	continue
       if replyee == USERNAME or (replyee not in HARASSMENT_EXEMPTIONS and ruleName not in HARASSMENT_EXEMPT_RULES and haveWeRepliedTo(replyee)):
         print "not allowed to reply to", replyee
         continue
-      elif ruleAlreadyInvokedInThread(ruleName, response[1].submission.id):
+      elif ruleAlreadyInvokedInThread(ruleName, threadID):
         print "rule already invoked in thread", response[1].permalink
         continue
       else:
@@ -480,7 +486,7 @@ while True:
           print "Exception in replying:", ex
           # If the exception is non-fatal, add it to the nextResponseQueue.
           strex = str(ex)
-          if "you are doing that too much" in strex:
+          if "you are doing that too much" in strex or "Internal Server Error" in strex:
             nextResponseQueue.append(queueEntry)
     elif responseType == "Post": #If we're submitting a post:
       try:
@@ -490,7 +496,7 @@ while True:
         #TODO: refactor to avoid repetition
         # If the exception is non-fatal, add it to the nextResponseQueue.
         strex = str(ex)
-        if "you are doing that too much" in strex:
+        if "you are doing that too much" in strex or "Internal Server Error" in strex:
           nextResponseQueue.append(queueEntry)
     else:
       print "Unknown response type:", responseType
