@@ -37,7 +37,7 @@ def rules(): # Define rules here.
           "My fedora is literally throbbing with euphoria.",
           ">Religion\n\n~Neil deGrasse Tyson",
           ">Religion\n\n~Carl Sagan",
-          "+/u/fedoratips 1 TIPS verify"
+          "+/u/fedoratips 5 TIPS verify"
         ])
       else:
         msfTitle = random.choice([
